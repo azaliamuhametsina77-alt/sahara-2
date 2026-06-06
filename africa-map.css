@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
+
+body {
+    background-color: #fefdf5;
+}
+
 #africa-scroll-nav.af-scroll-map {
     --base-fill: rgba(33, 33, 33, .10);
     --base-stroke: rgba(33, 33, 33, .24);
@@ -116,8 +121,9 @@
 }
 
 #africa-scroll-nav.is-project .af-country.is-project {
-    fill: var(--project-fill);
-    stroke: var(--project-stroke);
+    fill: #b42631 !important;
+    stroke: #A00000 !important;
+    stroke-width: 1.2 !important;
     opacity: 1;
     cursor: pointer;
 }
