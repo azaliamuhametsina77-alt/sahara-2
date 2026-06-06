@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+#africa-scroll-nav.af-scroll-map {
+    --base-fill: rgba(33, 33, 33, .10);
+    --base-stroke: rgba(33, 33, 33, .24);
+    --muted-fill: rgba(33, 33, 33, .045);
+    --ssa-fill: rgba(217, 150, 150, .24);
+    --ssa-stroke: rgba(160, 90, 90, .42);
+    --project-fill: rgba(217, 150, 150, .86);
+    --project-fill-hover: #C77F7F;
+    --project-stroke: rgba(160, 90, 90, .78);
+    position: relative;
+    height: 330vh;
+    background: transparent;
+    font-family: Montserrat, Arial, sans-serif;
+}
+
+#africa-scroll-nav * { box-sizing: border-box; }
+
+/* Sticky-контейнер с зазором */
+#africa-scroll-nav .af-scroll-map__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;                     /* ← расстояние между текстом и картой */
+    overflow: hidden;
+    background: transparent;
+}
+
+#africa-scroll-nav .af-scroll-map__svg {
+    width: min(92vw, 760px);
+    height: min(92vh, 760px);
+    display: block;
+    overflow: visible;
+    flex-shrink: 0;
+    order: 0;                     /* карта будет справа (второй элемент визуально) */
+}
+
+/* Текстовый блок – теперь слева благодаря order: -1 */
+#africa-scroll-nav .af-scroll-map__caption {
+    position: static;
+    width: min(430px, 38vw);
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+    color: rgba(33, 33, 33, .86);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+    order: -1;                    /* ← это переносит текст влево */
+}
+
+/* Состояния видимости */
+#africa-scroll-nav.is-ssa .af-scroll-map__caption,
+#africa-scroll-nav.is-project .af-scroll-map__caption {
+    opacity: 1;
+}
+
+#africa-scroll-nav .af-scroll-map__eyebrow {
+    margin-bottom: 8px;
+    color: #D71C1C;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+#africa-scroll-nav .af-scroll-map__text {
+    font-weight: 500;
+}
+
+#africa-scroll-nav .af-scroll-map__selected {
+    margin-top: 12px;
+    color: rgba(33, 33, 33, .60);
+    font-size: 16px;
+    line-height: 1.45;
+}
+
+#africa-scroll-nav .af-scroll-map__caption-project { display: none; }
+#africa-scroll-nav.is-project .af-scroll-map__caption-ssa { display: none; }
+#africa-scroll-nav.is-project .af-scroll-map__caption-project { display: block; }
+
+#africa-scroll-nav .af-scroll-map__step { height: 0; pointer-events: none; }
+
+/* Карта */
+#africa-scroll-nav .af-country {
+    fill: var(--base-fill);
+    stroke: var(--base-stroke);
+    stroke-width: .75;
+    vector-effect: non-scaling-stroke;
+    transition: fill .55s ease, stroke .55s ease, opacity .55s ease, transform .22s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+#africa-scroll-nav.is-ssa .af-country {
+    fill: var(--muted-fill);
+    opacity: .42;
+}
+
+#africa-scroll-nav.is-ssa .af-country.is-ssa {
+    fill: var(--ssa-fill);
+    stroke: var(--ssa-stroke);
+    opacity: 1;
+}
+
+#africa-scroll-nav.is-project .af-country {
+    fill: var(--muted-fill);
+    opacity: .26;
+}
+
+#africa-scroll-nav.is-project .af-country.is-project {
+    fill: var(--project-fill);
+    stroke: var(--project-stroke);
+    opacity: 1;
+    cursor: pointer;
+}
+
+#africa-scroll-nav.is-project .af-country.is-project:hover {
+    fill: var(--project-fill-hover);
+    transform: scale(1.018);
+}
+
+/* Sahel hover */
+#africa-scroll-nav .af-scroll-map__sahel-text { display: none; }
+#africa-scroll-nav.is-sahel-hover .af-scroll-map__default-text { display: none; }
+#africa-scroll-nav.is-sahel-hover .af-scroll-map__sahel-text { display: block; }
+
+#africa-scroll-nav.is-project.is-sahel-hover .af-country.is-project {
+    fill: var(--muted-fill);
+    opacity: .22;
+}
+
+#africa-scroll-nav.is-project.is-sahel-hover .af-country.is-sahel {
+    fill: var(--project-fill-hover);
+    stroke: var(--project-stroke);
+    opacity: 1;
+    transform: scale(1.014);
+}
+
+/* Начальное состояние: текст "Продолжайте листать..." */
+#africa-scroll-nav:not(.is-ssa):not(.is-project) .af-scroll-map__caption {
+    opacity: 1;
+}
+#africa-scroll-nav:not(.is-ssa):not(.is-project) .af-scroll-map__caption > * {
+    display: none;
+}
+#africa-scroll-nav:not(.is-ssa):not(.is-project) .af-scroll-map__caption::before {
+    content: "Продолжайте листать...";
+    display: block;
+    color: rgba(33, 33, 33, .86);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* ========== Мобильная версия ========== */
+/* ========== Мобильная версия ========== */
+@media (max-width: 980px) {
+  #africa-scroll-nav.af-scroll-map {
+    height: auto;
+  }
+
+  .af-scroll-map__sticky {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    display: flex;
+    flex-direction: row;          /* текст слева, карта справа */
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .af-scroll-map__svg {
+    width: 50%;
+    max-width: 400px;
+    height: auto;
+    touch-action: pan-y;
+    order: 2;                    /* карта справа */
+  }
+
+  .af-scroll-map__caption {
+    width: 50%;
+    max-width: 400px;
+    order: 1;                    /* текст слева */
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    position: static !important;
+    touch-action: pan-y;
+    display: block !important;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .af-scroll-map__step {
+    display: none;
+  }
+
+  /* Убираем десктопные переключения видимости — всё показываем через мобильную логику */
+  .af-scroll-map__caption-ssa,
+  .af-scroll-map__caption-project,
+  .af-scroll-map__default-text,
+  .af-scroll-map__sahel-text {
+    display: block !important;
+  }
+
+  /* Скрываем всё, кроме мобильного блока, по умолчанию */
+  .af-scroll-map__caption-ssa,
+  .af-scroll-map__caption-project {
+    display: none !important;
+  }
+
+  /* Мобильный информационный блок */
+  .af-scroll-map__mobile-info {
+    display: block;
+  }
+
+  .af-scroll-map__country-name {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .af-scroll-map__country-desc {
+    margin-bottom: 12px;
+    color: rgba(33, 33, 33, .86);
+  }
+
+  .af-scroll-map__confirm-text {
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .af-scroll-map__confirm-buttons {
+    display: flex;
+    gap: 12px;
+  }
+
+  .af-scroll-map__yes-btn {
+    background: #D71C1C;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-family: Montserrat, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+
+  .af-scroll-map__yes-btn:hover {
+    background: #b01818;
+  }
+
+  /* Подсветка стран — всегда показываем проектные страны */
+  #africa-scroll-nav .af-country {
+    fill: rgba(33, 33, 33, .045);
+    opacity: .26;
+  }
+  #africa-scroll-nav .af-country.is-project {
+    fill: rgba(217, 150, 150, .86);
+    stroke: rgba(160, 90, 90, .78);
+    opacity: 1;
+  }
+}
+
+/* На десктопе скрываем мобильный блок и возвращаем стандартное поведение */
+@media (min-width: 981px) {
+  .af-scroll-map__mobile-info {
+    display: none !important;
+  }
+}
