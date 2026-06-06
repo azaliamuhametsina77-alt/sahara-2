@@ -96,7 +96,7 @@ body {
 /* Карта */
 #africa-scroll-nav .af-country {
     fill: var(--base-fill);
-    stroke: var(--base-stroke);
+    stroke: #000000;
     stroke-width: .75;
     vector-effect: non-scaling-stroke;
     transition: fill .55s ease, stroke .55s ease, opacity .55s ease, transform .22s ease;
